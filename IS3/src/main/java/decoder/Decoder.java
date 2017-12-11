@@ -34,4 +34,10 @@ public class Decoder {
     public static int getCipherKey() {
         return cipherKey;
     }
+
+    public static void main(String[] args) {
+        Decoder d = new Decoder("messages/m1.txt");
+        System.out.println("Key: " + Decoder.getCipherKey());
+        System.out.println("Message: " + Decoder.getDecodedMsg());
+    }
 }

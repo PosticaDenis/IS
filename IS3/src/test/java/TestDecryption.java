@@ -1,8 +1,11 @@
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import decoder.Decoder;
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import static org.junit.Assert.*;
+
+import utils.FileReaderUtil;
 import utils.ShiftUtil;
 
 import java.io.IOException;
@@ -24,15 +27,14 @@ public class TestDecryption {
     @Test
     public void testDecoder() {
 
-        String[] msg = {"messages/m1.txt", "messages/m2.txt", "messages/m3.txt", "messages/m4.txt", "messages/m5.txt"};
+        String[] msg = {"m1.txt", "m2.txt", "m3.txt", "m4.txt", "m5.txt"};
 
 
         for (String m: msg) {
             new Decoder(m);
 
             try {
-                String decryptedMsg = Resources.toString(Resources.getResource(m), Charsets.UTF_8);
-
+                String decryptedMsg = FileUtils.readFileToString(FileUtils.getFile("src","test", "resources", "messages", m), Charsets.UTF_8);
                 assertEquals(Decoder.getDecodedMsg(), decryptedMsg);
                 System.out.println("Key: " + Decoder.getCipherKey() + ";\nMessage: " + Decoder.getDecodedMsg() + "\n");
             } catch (IOException e) {
