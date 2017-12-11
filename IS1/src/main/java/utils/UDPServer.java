@@ -1,0 +1,31 @@
+package utils;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+
+/**
+ * Created by c-denipost on 11-Dec-17.
+ **/
+
+//TODO make it single-tone
+public class UDPServer extends Thread {
+
+    @Override
+    public void run() {
+        try {
+            DatagramSocket serverSocket = new DatagramSocket(9876);
+            byte[] receiveData = new byte[1024];
+
+            while(true)
+            {
+                DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+                serverSocket.receive(receivePacket);
+                String sentence = new String( receivePacket.getData());
+                System.out.println("[UDP]RECEIVED: " + sentence);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}

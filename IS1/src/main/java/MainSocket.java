@@ -1,4 +1,6 @@
 import utils.IpCheckerUtil;
+import utils.TCPConnectionAccepter;
+import utils.UDPServer;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -29,8 +31,8 @@ public class MainSocket {
 
                     String msg = tmp[3].split("\"")[1];
 
-                    if (cmd.contains("-l") && !cmd.contains("-m")){
-                        ms.listenUDP();
+                    if (cmd.contains("-l")){
+                        ms.lintenTCP(serverAddr);
                     }
                     else {
                         ms.sendTCP(serverAddr, msg);
@@ -48,9 +50,9 @@ public class MainSocket {
 
                 if (IpCheckerUtil.validate(serverAddr)) {
 
-                    String msg = tmp[3].split("\"")[1];
+                    String msg = cmd.split("\"")[1];
 
-                    if (cmd.contains("-l") && !cmd.contains("-m")){
+                    if (cmd.contains("-l")){
                         ms.listenUDP();
                     }
                     else {
@@ -78,9 +80,12 @@ public class MainSocket {
 
         try {
             Socket s = new Socket(host, Integer.parseInt(port));
+
+            Thread.sleep(500);
+
             DataOutputStream toServer = new DataOutputStream(s.getOutputStream());
-            toServer.writeBytes(msg);
-        } catch (IOException e) {
+            toServer.writeBytes(msg + "\r");
+        } catch (Exception e) {
             System.err.println("Mostly probable Server is down.");
             //e.printStackTrace();
         }
@@ -108,13 +113,21 @@ public class MainSocket {
         }
     }
 
-    public void lintenTCP() {
+    public void lintenTCP(String serverAddr) {
+
+        String port = serverAddr.split(":")[1];
 
         System.out.println("Starting to listen for TCP messages");
 
+        TCPConnectionAccepter connectionAccepter = new TCPConnectionAccepter(port);
+        connectionAccepter.start();
     }
 
     public void listenUDP() {
 
+        System.out.println("Starting lo listed as UDP server.");
+
+        UDPServer udpServer = new UDPServer();
+        udpServer.start();
     }
 }
