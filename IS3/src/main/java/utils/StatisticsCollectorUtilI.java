@@ -1,6 +1,7 @@
 package utils;
 
 import com.google.common.base.CharMatcher;
+import decoder.IDataAnalysisUtil;
 
 import java.util.List;
 import java.util.Set;
@@ -8,21 +9,17 @@ import java.util.Set;
 /**
  * Created by Dennis on 02-Dec-17.
  **/
-public class StatisticsCollectorUtil {
+public class StatisticsCollectorUtilI implements IDataAnalysisUtil {
 
     private String language;
-    private List<String> combinations;
+    private List<String> allCombinations;
     private Set<String> dictionary;
+    private String stats;
 
-    public StatisticsCollectorUtil(String lang, List<String> aCombinations, Set<String> dictionary) {
-
-        this.language = lang;
-        this.combinations = aCombinations;
-        this.dictionary = dictionary;
-
+    public StatisticsCollectorUtilI() {
     }
 
-    public String generateStats() {
+    public void generateData() {
 
         int stat = 0;
         int key = 0;
@@ -30,7 +27,7 @@ public class StatisticsCollectorUtil {
         int tmpStat;
         int counter = -1;
 
-        for (String combination: combinations) {
+        for (String combination: allCombinations) {
             counter ++;
             tmpStat =0;
 
@@ -63,6 +60,24 @@ public class StatisticsCollectorUtil {
             }
         }
 
-        return stat + ":" + key + ":" + language;
+        stats = stat + ":" + key + ":" + language;
     }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public void setDictionary(Set<String> dictionary) {
+        this.dictionary = dictionary;
+    }
+
+    public String getStats() {
+        return stats;
+    }
+
+    public void setAllCombinations(List<String> allCombinations) {
+        this.allCombinations = allCombinations;
+    }
+
+    public void setStats(List<String> stats) {}
 }

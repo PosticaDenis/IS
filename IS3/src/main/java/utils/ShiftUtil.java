@@ -1,14 +1,24 @@
 package utils;
 
+import decoder.IDataProcessingUtil;
+
+import java.util.List;
+
 /**
  * Created by c-denipost on 01-Dec-17.
  *
  * Supports russian language, without Ё,ё
  * Supports latin based languages, without special characters (à, á, â, Ì, Ò, Ù, Î, Ă, Ș, Ț, etc)
  **/
-public class ShiftUtil {
+public class ShiftUtil implements IDataProcessingUtil {
 
-    public String shift(String message, String alphabet, int times) {
+    private String message;
+    private String alphabet;
+    private int times;
+
+    private String shiftedMsg;
+
+    public void process() {
         String bar = "";
 
         if (alphabet.equals("cyrillic")) {
@@ -42,7 +52,7 @@ public class ShiftUtil {
                 }
             }
         }
-        return bar;
+        shiftedMsg = bar;
     }
 
     private static boolean isCyrillicLetter(char c) {
@@ -54,4 +64,29 @@ public class ShiftUtil {
         return (c >= 'a' && c <= 'z') ||
                 (c >= 'A' && c <= 'Z');
     }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setAlphabet(String alphabet) {
+        this.alphabet = alphabet;
+    }
+
+    public void setTmes(int imes) {
+        this.times = imes;
+    }
+
+    public String getShiftedMsg() {
+        return shiftedMsg;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public List<String> getAllCombinations() {
+        return null;
+    }
+    public void setMsgPath(String msgPath){}
 }

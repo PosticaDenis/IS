@@ -1,23 +1,23 @@
 package utils;
 
+import decoder.IDataAnalysisUtil;
 import decoder.Decoder;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Dennis on 02-Dec-17.
  **/
-public class StatsAnalyzerUtil {
+public class StatsAnalyzerUtil implements IDataAnalysisUtil {
 
-    private List<String> combinations;
+    private List<String> allCombinations;
+    private List<String> stats;
 
-    public StatsAnalyzerUtil(List<String> combinations) {
-
-        this.combinations = combinations;
+    public StatsAnalyzerUtil() {
     }
 
-    public void process(List<String> stats) {
-
+    public void generateData() {
 
         String bingo = stats.get(0);
 
@@ -31,9 +31,22 @@ public class StatsAnalyzerUtil {
 
         //String lang = bingo.split(":")[2];
         int cipherKey = Integer.parseInt(bingo.split(":")[1]);
-        String decodedMsg = combinations.get(cipherKey);
+        String decodedMsg = allCombinations.get(cipherKey);
 
         Decoder.setCipherKey(cipherKey);
         Decoder.setDecodedMsg(decodedMsg);
     }
+
+    public void setAllCombinations(List<String> combinations) {
+        this.allCombinations = combinations;
+    }
+
+    public void setStats(List<String> stats) {
+        this.stats = stats;
+    }
+    public String getStats() {
+        return null;
+    }
+    public void setDictionary(Set<String> dictionary) {}
+    public void setLanguage(String language) {}
 }

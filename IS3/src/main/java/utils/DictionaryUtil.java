@@ -1,6 +1,9 @@
 package utils;
 
 import com.google.common.annotations.Beta;
+import decoder.Decoder;
+import decoder.FactoryProducer;
+import decoder.IDataAnalysisUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,34 +13,42 @@ import java.util.*;
 /**
  * Created by Dennis on 02-Dec-17.
  **/
-public class DictionaryUtil {
+public class DictionaryUtil implements IDataAnalysisUtil {
 
     private static List<String> availableLanguages = Arrays.asList("eng", "ro", "ru");
-
     private URL url = this.getClass().getClassLoader().getResource("languages");
+    private IDataAnalysisUtil statsAnalyzerUtil = Decoder.getDataAnalysisUtil("STATSA");
+    private IDataAnalysisUtil statisticsCollectorUtil = Decoder.getDataAnalysisUtil("STATSC");
+    private List<String> allCombinations;
 
-    private StatsAnalyzerUtil statsAnalyzerUtil;
-
-    public DictionaryUtil(List<String> allCombinations) {
+    public DictionaryUtil() {
 
         //availableLanguages = new ArrayList<String>();
         //setAvailableLanguages();
-        statsAnalyzerUtil = new StatsAnalyzerUtil(allCombinations);
-
-        analyze(allCombinations);
+        //generateData();
     }
 
-    private void analyze(List<String> allCombinations) {
+    public void generateData() {
 
         List<String> stats = new ArrayList<String>();
 
         for (String lang: availableLanguages) {
 
-            StatisticsCollectorUtil statisticsCollectorUtil = new StatisticsCollectorUtil(lang, allCombinations, getDictionary(lang));
-            stats.add(statisticsCollectorUtil.generateStats());
+            //StatisticsCollectorUtilI statisticsCollectorUtil = new StatisticsCollectorUtilI(lang, allCombinations, getDictionary(lang));
+            statisticsCollectorUtil.setLanguage(lang);
+            statisticsCollectorUtil.setAllCombinations(allCombinations);
+            statisticsCollectorUtil.setDictionary(getDictionary(lang));
+            statisticsCollectorUtil.generateData();
+
+            stats.add(statisticsCollectorUtil.getStats());
         }
 
-        statsAnalyzerUtil.process(stats);
+        //statsAnalyzerUtil = new StatsAnalyzerUtil(allCombinations, stats);
+        //statsAnalyzerUtil = Decoder.getDataAnalysisUtil("STATSA");
+        statsAnalyzerUtil.setAllCombinations(allCombinations);
+        statsAnalyzerUtil.setStats(stats);
+
+        statsAnalyzerUtil.generateData();
     }
 
     @Beta
@@ -77,5 +88,16 @@ public class DictionaryUtil {
         }
 
         return dictionary;
+    }
+
+    public void setAllCombinations(List<String> allCombinations) {
+        this.allCombinations = allCombinations;
+    }
+
+    public void setStats(List<String> stats) {}
+    public void setDictionary(Set<String> dictionary) {}
+    public void setLanguage(String language) {}
+    public String getStats() {
+        return null;
     }
 }

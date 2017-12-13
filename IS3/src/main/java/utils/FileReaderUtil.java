@@ -1,22 +1,22 @@
 package utils;
 
 import com.google.common.base.Charsets;
-import com.google.common.io.Resources;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.util.List;
 
+import decoder.IDataProcessingUtil;
 import org.apache.commons.io.FileUtils;
 
 /**
  * Created by Dennis on 02-Dec-17.
  **/
-public class FileReaderUtil {
+public class FileReaderUtil implements IDataProcessingUtil {
 
+    private String msgPath;
     private String message;
 
-    public FileReaderUtil(String msgPath) {
+    public void process() {
         try {
             message = FileUtils.readFileToString(FileUtils.getFile("src","main", "resources", "messages", msgPath), Charsets.UTF_8);
         } catch (IOException e) {
@@ -25,7 +25,17 @@ public class FileReaderUtil {
         }
     }
 
+    public void setMsgPath(String msgPath) {
+        this.msgPath = msgPath;
+    }
+
     public String getMessage() {
         return message;
+    }
+
+    public void setMessage(String message) {}
+
+    public List<String> getAllCombinations() {
+        return null;
     }
 }

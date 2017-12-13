@@ -1,27 +1,34 @@
 package utils;
 
+import decoder.IDataProcessingUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Dennis on 02-Dec-17.
  **/
-public class CombinationsUtil {
+public class CombinationsUtil implements IDataProcessingUtil {
 
     private List<String> allCombinations;
     private ShiftUtil shiftUtil;
-
     private static boolean isCyrillic = false;
 
-    public CombinationsUtil(String message) {
+    private String message;
+
+    public CombinationsUtil() {
 
         allCombinations = new ArrayList<String>();
         shiftUtil = new ShiftUtil();
 
-        calculateCombinations(message);
+        //process();
     }
 
-    private void calculateCombinations(String message) {
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void process() {
 
         int alphabetLength = 26;
         String alphabet = "latin";
@@ -34,7 +41,12 @@ public class CombinationsUtil {
         }
 
         for (int i = 0; i < alphabetLength; i++) {
-            allCombinations.add(shiftUtil.shift(message, alphabet, i));
+
+            shiftUtil.setMessage(message);
+            shiftUtil.setAlphabet(alphabet);
+            shiftUtil.setTmes(i);
+            shiftUtil.process();
+            allCombinations.add(shiftUtil.getShiftedMsg());
         }
     }
 
@@ -55,4 +67,10 @@ public class CombinationsUtil {
     public static boolean isIsCyrillic() {
         return isCyrillic;
     }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMsgPath(String msgPath){}
 }
