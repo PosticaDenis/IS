@@ -26,7 +26,9 @@ public class TCPServer extends Thread {
                 BufferedReader inFromClient = new BufferedReader(new InputStreamReader(s.getInputStream()));
                 clientSentence = inFromClient.readLine();
 
-                System.out.println("[TCP]RECEIVED: " + clientSentence);
+                if (clientSentence != null) {
+                    System.out.println("[TCP]RECEIVED: " + clientSentence);
+                }
             } catch (IOException e) {
 
                 //e.printStackTrace();

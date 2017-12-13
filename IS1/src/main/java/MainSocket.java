@@ -1,11 +1,12 @@
-import utils.IpCheckerUtil;
-import utils.TCPConnectionAccepter;
-import utils.UDPServer;
+import utils.*;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Timer;
 
 /**
  * Created by c-denipost on 11-Dec-17.
@@ -21,8 +22,8 @@ public class MainSocket {
             Scanner scanner = new Scanner(System.in);
             String cmd = scanner.nextLine();
 
-            if (cmd.contains("-tp") && cmd.contains("-m")) {
-                //expected format: -tp [host:port] -m ["message"]
+            if (cmd.contains("-m") && !cmd.contains("-l")) {
+                //expected format: -tp [host:port] -m ["message"] (-l) (-i 1) (-max 10)
 
                 String[] tmp = cmd.split(" ");
                 String serverAddr = tmp[1];
@@ -30,86 +31,61 @@ public class MainSocket {
                 if (IpCheckerUtil.validate(serverAddr)) {
 
                     String msg = tmp[3].split("\"")[1];
+                    List<String> conf = new ArrayList<String>();
+                    String i = "0";
+                    String max = "1";
 
-                    if (cmd.contains("-l")){
-                        ms.lintenTCP(serverAddr);
+                    if (cmd.contains("-i") && cmd.contains("-max")){
+
+                        i = tmp[5];
+                        max = tmp[7];
+
+
+                    }
+
+                    conf.add(i);
+                    conf.add(max);
+                    conf.add(serverAddr);
+                    conf.add(msg);
+
+                    ITimerTask timer;
+
+                    if (cmd.startsWith("-tp")){
+                         timer = new TimerTCPTask(conf);
                     }
                     else {
-                        ms.sendTCP(serverAddr, msg);
+                        timer = new TimerUDPTask(conf);
                     }
+
+                    timer.run();
+
                 }
                 else {
                     System.out.println("Invalid address. Try again.");
                 }
 
             }
-            else if (cmd.contains("-up") && cmd.contains("-m")) {
-
+            else if (cmd.contains("-l")) {
                 String[] tmp = cmd.split(" ");
                 String serverAddr = tmp[1];
 
                 if (IpCheckerUtil.validate(serverAddr)) {
 
-                    String msg = cmd.split("\"")[1];
-
-                    if (cmd.contains("-l")){
-                        ms.listenUDP();
+                    if (cmd.contains("-tp")){
+                        ms.lintenTCP(serverAddr);
                     }
-                    else {
-                        ms.sendUDP(serverAddr, msg);
+                    if (cmd.contains("-up")){
+                        ms.listenUDP(serverAddr);
                     }
                 }
                 else {
                     System.out.println("Invalid address. Try again.");
                 }
-
             }
             else {
 
             }
 
-        }
-    }
-
-    private void sendTCP(String serverAddr, String msg) {
-
-        String host = serverAddr.split(":")[0];
-        String port = serverAddr.split(":")[1];
-
-        System.out.println("Sending TCP message to the " + host + ":" + port);
-
-        try {
-            Socket s = new Socket(host, Integer.parseInt(port));
-
-            Thread.sleep(500);
-
-            DataOutputStream toServer = new DataOutputStream(s.getOutputStream());
-            toServer.writeBytes(msg + "\r");
-        } catch (Exception e) {
-            System.err.println("Mostly probable Server is down.");
-            //e.printStackTrace();
-        }
-    }
-
-    private void sendUDP(String serverAddr, String msg) {
-
-        String host = serverAddr.split(":")[0];
-        String port = serverAddr.split(":")[1];
-
-        byte[] sendData = msg.getBytes();
-
-        System.out.println("Sending UDP message to the " + host + ":" + port);
-
-        try {
-            InetAddress IPAddress = InetAddress.getByName(host);
-            DatagramSocket clientSocket = new DatagramSocket();
-            DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, Integer.parseInt(port));
-
-            clientSocket.send(sendPacket);
-            clientSocket.close();
-        } catch (Exception e) {
-            System.err.println("Mostly probable Server is down.");
-            //e.printStackTrace();
         }
     }
 
@@ -123,11 +99,13 @@ public class MainSocket {
         connectionAccepter.start();
     }
 
-    public void listenUDP() {
+    public void listenUDP(String serverAddr) {
 
-        System.out.println("Starting lo listed as UDP server.");
+        String port = serverAddr.split(":")[1];
 
-        UDPServer udpServer = new UDPServer();
+        System.out.println("Starting to listen as UDP server.");
+
+        UDPServer udpServer = new UDPServer(port);
         udpServer.start();
     }
 }

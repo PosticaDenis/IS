@@ -11,10 +11,16 @@ import java.net.DatagramSocket;
 //TODO make it single-tone
 public class UDPServer extends Thread {
 
+    private String port;
+
+    public UDPServer(String port) {
+        this.port = port;
+    }
+
     @Override
     public void run() {
         try {
-            DatagramSocket serverSocket = new DatagramSocket(9876);
+            DatagramSocket serverSocket = new DatagramSocket(Integer.parseInt(port));
             byte[] receiveData = new byte[1024];
 
             while(true)
