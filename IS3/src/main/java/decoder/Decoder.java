@@ -1,9 +1,5 @@
 package decoder;
 
-import utils.DictionaryUtil;
-import utils.FileReaderUtil;
-import utils.CombinationsUtil;
-
 /**
  * Created by Dennis on 02-Dec-17.
  **/
@@ -15,10 +11,14 @@ public class Decoder {
     private static int cipherKey;
     private String msgPath = "";
 
-    private static AbstractFactory dataAnalysisUtilsFactory = FactoryProducer.getFactory("ANALYSIS");
-    private static AbstractFactory dataProcessingUtilsFactory = FactoryProducer.getFactory("PROCESSING");
+    private static AbstractFactory dataAnalysisUtilsFactory;// = FactoryProducer.getFactory("ANALYSIS");
+    private static AbstractFactory dataProcessingUtilsFactory;// = FactoryProducer.getFactory("PROCESSING");
 
     private Decoder() {
+
+        AbstractFactoryCache.loadCache();
+        dataAnalysisUtilsFactory = AbstractFactoryCache.getFactory("ANALYSIS");
+        dataProcessingUtilsFactory = AbstractFactoryCache.getFactory("PROCESSING");
     }
 
     public static Decoder getInstance() {
