@@ -8,7 +8,7 @@ To send message through TCP use:
 `-up <host_address>:<port> -m "<message_body>"`  
 
 2. The user is able to turn himself into a UDP and/or UDP Server, listening for mesages from other users.  
-To start accespting TCP connections and start listening for messages use:  
+To start accepting TCP connections and start listening for messages use:  
 `-tp <host_address>:<port> -l`  
 To start listening for messages, sent through UDP, use:  
 `-up <host_address>:<port> -l`  
