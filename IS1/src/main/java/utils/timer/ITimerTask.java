@@ -1,4 +1,4 @@
-package utils;
+package utils.timer;
 
 /**
  * Created by Dennis on 13-Dec-17.
