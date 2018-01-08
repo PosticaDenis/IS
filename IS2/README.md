@@ -7,3 +7,16 @@
 ## Slow HTTP POST Demo
 
 &nbsp; &nbsp; In order to show the possible effect of an slow HTTP Post attack on a web application, I created a simple CRUD web-app, in Groovy Grails, and used SwitchBlade to perform the slow HTTP POST attacks.   
+
+SwitchBlade UI:
+![Alt text](1.png?raw=true)  
+
+Performance of the web-app before attack:
+![Alt text](2.png?raw=true) 
+
+Performance of the web-app with 150 connections:
+![Alt text](3.png?raw=true) 
+
+&nbsp; &nbsp; Untill 199 connections the web-app was able to load, slower, but it was able. Starting with 200 connections, web-app was no more available.
+
+&nbsp; &nbsp; P.S. Tried this app on a random site (mostly probable not access by anyone in the last 10 years ...) I found (`http://www.genochoice.com/`), at 200 connections `This site can’t be reached` appeared, when tried to access the site.
