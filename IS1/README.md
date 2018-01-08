@@ -44,9 +44,9 @@ To scan for free port, indicating a range, use:
 
 
 ## System description
-  To be able to continuously read commands from user, it is used an `while(true)` loop, the program uses the command introduced by the user, in the command line. The command is read as `String`, splited and depending on the command structure, performs different actions. Indifferent of the command, it is used an IpValidator to validate the format of the introduced server address.
+ &nbsp; &nbsp;To be able to continuously read commands from user, it is used an `while(true)` loop, the program uses the command introduced by the user, in the command line. The command is read as `String`, splited and depending on the command structure, performs different actions. Indifferent of the command, it is used an IpValidator to validate the format of the introduced server address.
 
-  To forbid the creation of 2 the same listeners (two TCP/UDP), for the same client, I use use 2 static variables, which are checked for `null` value, before creating the corresponding classes. I.e. if user will call the command for starting listener, an message will be returned, saying that the listener is already started.
+ &nbsp; &nbsp;To forbid the creation of 2 the same listeners (two TCP/UDP), for the same client, I use use 2 static variables, which are checked for `null` value, before creating the corresponding classes. I.e. if user will call the command for starting listener, an message will be returned, saying that the listener is already started.
   
-All the classes responding for connections acceptance and messages processing are extending Thread class, this way, when calling their methods, the `while(true)` loops from those classes won't interfere with the main one.
+ &nbsp; &nbsp;All the classes responding for connections acceptance and messages processing are extending Thread class, this way, when calling their methods, the `while(true)` loops from those classes won't interfere with the main one.
   
