@@ -19,7 +19,9 @@
 &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;| &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |----`StatisticsCollectorUtilI.java`  
 &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;| &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |----`StatsAnalyzerUtil.java`  
 &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;|---`resources`----`languages`  
-&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |----`messages`  
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |----`messages` 
+
+## Project Analysis
 
 &nbsp; &nbsp; Classes `AbstractFactory` and `FactoryProducer` are used to provide the implementation of *Abstract Factory Pattern*. Using these classes, class `Decoder` gets one of the types of factories (`DataAnalysisUtilsFactory`, `DataProcessingUtilsFactory`).  
 
