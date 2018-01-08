@@ -40,7 +40,7 @@ public class TimerUDPTask extends Thread implements ITimerTask {
             clientSocket = new DatagramSocket();
             sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, Integer.parseInt(port));
         } catch (Exception e) {
-            System.err.println("Mostly probable Server is down.11");
+            System.err.println("Mostly probable Server is down.");
         }
     }
 
