@@ -37,9 +37,9 @@
 
 &nbsp; &nbsp; Class `DictionaryUtil` is used to read the dictionaries, which are under `resources-->languages` and call the statistics collector for each of the languages.  
 
-&nbsp; &nbsp; Class `StatisticsCollectorUtilI` is used to coolect the statistics about frequency of the words, from dictionaries, in all the possible combinations of the encrypted message. The technique I used is the following: if a word from dictionary is found in one of the combinations of the message, i give, to the corresponding key and langues, some points equal to the length of the word found (e.g. util found String `hello` in the combination `x` of the language `y`, then this pair gets 5 pts).     
+&nbsp; &nbsp; Class `StatisticsCollectorUtil` is used to coolect the statistics about frequency of the words, from dictionaries, in all the possible combinations of the encrypted message. The technique I used is the following: if a word from dictionary is found in one of the combinations of the message, i give, to the corresponding key and langues, some points equal to the length of the word found (e.g. util found String `hello` in the combination `x` of the language `y`, then this pair gets 5 pts).     
 
-&nbsp; &nbsp; Class `StatisticsCollectorUtilI` is used to analyze the calculated statistics. It finds and returns the pair (key, decoded message) which has the most pts.
+&nbsp; &nbsp; Class `StatisticsCollectorUtil` is used to analyze the calculated statistics. It finds and returns the pair (key, decoded message) which has the most pts.
 
 ## Program Results
 
